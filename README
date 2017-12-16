@@ -1,4 +1,15 @@
-Release Notes
+Version 3.5.0:
+* The project is quiet old, but I love it. To keep it in a usable format it is time to make some rough changes (srry Nikolai).
+* In my first commits I target 3 issues:
+* 1. The editor is just unusable (it does not feature revert, auto-completion, strg+c is insert a c-chord ...)
+*   Here I will go with Visual Studio Code at is is lightweight,platform independent and in comparison to Sublime Text it does have a debugger and no licensing popups.
+* 2. The latex side is completely hidden behind a server.
+*   I will remove the binding to the server side, which is the biggest differences.  I think most users of this program have already tex installed or are willing for the advantages.
+* 3. Make it minimal for easy adjustments and better debugging  
+*   adding some small features as in tabulature \color \bold \italic support and some adjustments arrows etc.
+
+
+Old Release Notes
 =============
 
 Version 3.4.0:
