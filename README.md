@@ -3,7 +3,7 @@ I always wanted to have a songbook where you dont have to turn pages during one 
 longer when printed from other programs.
 If you like the idea of writing your own compact songbook, GuitarTeX is the perfect tool for you. 
 
-##Installation:
+## Installation:
 * Install java runtime environment (jre>1.8)
 * Install visual studio code
 * Install a tex destribution (tested wih texlive)
@@ -11,7 +11,7 @@ If you like the idea of writing your own compact songbook, GuitarTeX is the perf
 * optional. If you want to add features you need the Java SDK and I recommed the VSCode extension: Language support for Java(TM) by Red Hat)
 * Clone the repo and open it with vscode
 
-##Usage:
+## Usage:
 * Create a .gtx in the gtx/ folder
 * Ctrl+B -> Parse GTX: Handles the file over to the main.class which wraps the original parser (see /.vscode/tasks.json)
 * Ctrl+Shift+P -> run Tasks -> openTeX: Oopens the parsed texfile which is stored in the tex/ folder
