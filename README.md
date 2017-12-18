@@ -1,4 +1,4 @@
-# GuitarTeX2 DevelopersEdition
+# GuitarTeX2 Developers Edition
 I always wanted to have a songbook where you dont have to turn pages during one song.
 With GuitarTeX2 I could easily achieve this - even for songs where the tabs are 10 pages or 
 longer when printed from other programs.
@@ -24,4 +24,10 @@ The main differences to the repo from which this is forked are:
 * right click show pdf in new tab/webbrowser enables synctex debugging
 
 ## Licensing
-[GNU GPL-v2]https://opensource.org/licenses/GPL-2.0
+[GNU GPL-v2](https://opensource.org/licenses/GPL-2.0)
+
+## Further information
+This was tested under ArchLinux and Windows10 x64.
+Big thanks to Nikolai providing his parser!
+I will provide a short user and developer wiki the next days.
+
