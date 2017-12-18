@@ -9,7 +9,7 @@ The main differences to the repo from which this is forked are:
 * VSCode necessary ->  To have a good, up-to-date editor for running the parser, TeX and debugging of an adapted parser 
 
 ## Installation:
-* Install java runtime environment (jre>1.8)
+* Install java runtime environment (jre>=8)
 * Install visual studio code
 * Install a tex destribution (tested wih texlive)
 * Install vscode extension for: latex support (tested with LaTeX Workshop)
@@ -28,6 +28,8 @@ The main differences to the repo from which this is forked are:
 
 ## Further information
 This was tested under ArchLinux and Windows10 x64.
+
 Big thanks to Nikolai providing his parser!
+
 I will provide a short user and developer wiki the next days.
 
