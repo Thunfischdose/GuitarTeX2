@@ -1,24 +1,46 @@
+% This is a demo file
+% I want to demonstrate commands I use, no make the layout beautiful
+% I took this song because it is loyality free
+
 {title: House Of The Rising Sun}
-{subtitle: The Animals}
+{subtitle: Unknown but here is the interpret}
 
-{a:Tonart/Paralleltonart: A-Moll/C-Dur}
-{a:Takt/Zupfrythmus: 3/4 pimami}
+{a:Key/parallelkey: A-minor/C-major}
+{a:Rythm: 3/4 pimami picking or \downarrow}
+% the parser adds mathmode for arrows
 
-{a:Vorspiel: Am C D F Am C E E7}
+% here a basic latex-comment: define creates chord shapes at the end
+{define:Am t x n 2 2 1 n}
+{define:Am* 5 1 3 3 1 1 1}
+% for open chords one should remember
 
-{bridge}
-	[Am]There is a [C]house in [D]New Orl[F]eans,
+% {a: } creates a heading often it helps to put it infront of chorus etc and refer to it to save space
+{a:Intro: Am C D F Am C E E7}
+{guitartab:[9;Am]&[2;\textbf{0}]__[4;2][5;1][6;0][5;1][4;2]|[9;C]&[2;\textcolor{red}{3}]__[4;0][5;1][6;0][5;1][4;0]|[9;...]__|[-2;E7]&[9;\downarrow]&[1;0]&[2;2]&[3;0]&[4;1]&[5;0]&[6;0][9;\downarrow]&[1;0]&[2;2]&[3;0]&[4;1]&[5;0]&[6;0][9;\downarrow]&[1;0]&[2;2]&[3;0]&[4;1]&[5;0]&[6;0][9;\downarrow]&[1;0]&[2;2]&[3;0]&[4;1]&[5;0]&[6;0][9;\downarrow]&[1;0]&[2;2]&[3;0]&[4;1]&[5;0]&[6;0][9;\downarrow]&[1;0]&[2;2]&[3;0]&[4;1]&[5;0]&[6;0]|}
+% you can control the spacing in guitartab with _
+% the strings are numbered against the convention so 2 = A 3 = D and so on
+% color makes sense for marking meldoy line etc. bld for strong accent and italian for low accent
+% field top above can be accessed with 9 below by -2
+
+{a:Chorus}
+{chorus}
+	[Am]There is a [C]house in [D]New Orl[F]ean
 	[Am]They call the [C]Rising [E]Sun  [E7]
 	And It's b[Am]een the [C]ruin of [D]many a poor [F]boy
 	[Am]And God, I [E]know, I'm [Am]one [E]
-{/bridge}
+{/chorus}
 
-{chorus}
+{a: Vers 1+2}
+% divide pages by minipage
+
+\begin{minipage}[t]{0.5\textwidth}
+{bridge}
 	[Am]My mother w[C]as a [D]tailor[F]
 	She [Am]sewed my [C]new blue [E]jeans[E7]
 	My [Am]father [C]was a [D]gambling [F]man
 	[Am]Down in [E]New [Am]Orleans [E]
-{/chorus}
+{/bridge}
+\end{minipage}
 
 \begin{minipage}[t]{0.5\textwidth}
 {bridge}
@@ -29,6 +51,8 @@
 {/bridge}
 \end{minipage}
 
+{a: Vers 3+4}
+
 \begin{minipage}[t]{0.5\textwidth}
 {bridge}
 	So [Am]mothers, [C]tell your [D]children[F]
@@ -38,28 +62,21 @@
 {/bridge}
 \end{minipage}
 
-{chorus}
+\begin{minipage}[t]{0.5\textwidth}
+{bridge}
 	I've [Am]got one [C]foot on the [D]platform[F]
 	The [Am]other [C]foot on the [E]train[E7]
 	I'm [Am]going [C]back to [D]New [F]Orleans
 	To [Am]wear the [E]ball and [Am]chain [E]
-{/chorus}
+{/bridge}
+\end{minipage}
 
-\begin{minipage}[t]{0.5\textwidth}
+{a: Vers 5}
 {bridge}
 	So [Am]mothers, [C]tell your [D]children[F]
 	Not to [Am]do what [C]I have [E]done[E7]
 	[Am]Spend your [C]life in [D]sin and [F]misery
 	In the [Am]house of the [E]Rising [Am]Sun [E]
 {/bridge}
-{/bridge}
-\end{minipage}
 
-\begin{minipage}[t]{0.5\textwidth}
-{bridge}
-	[Am]There is a [C]house in [D]New Orl[F]eans,
-	[Am]They call the [C]Rising [E]Sun  [E7]
-	And It's b[Am]een the [C]ruin of [D]many a poor [F]boy
-	[Am]And God, I [E]know, I'm [Am]one [E]
-{/bridge}
-\end{minipage}
+{a:Chorus}

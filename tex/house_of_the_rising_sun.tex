@@ -1,0 +1,200 @@
+\documentclass[english,12pt]{article} 
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[utf8]{inputenc}
+\usepackage{babel}
+\usepackage{color}
+\usepackage{ifthen}
+\usepackage{calc}
+\usepackage{gchords}
+\usepackage{calligra}
+
+%------definition of font colors-----------
+\definecolor{chorus}{rgb}{0,0,0}
+\definecolor{bridge}{rgb}{0,0,1}
+\definecolor{instr}{rgb}{.3,.3,.3}
+\definecolor{tab}{rgb}{.3,.3,.3}
+\definecolor{second_text}{rgb}{1,1,1}
+\definecolor{second_back}{rgb}{.7,.7,.7}
+\newenvironment{chorus}{\color{chorus}}{\normalcolor}
+\newenvironment{bridge}{\color{bridge}}{\normalcolor}
+\newenvironment{instr}{\color{instr}}{\normalcolor}
+\newenvironment{gtxtab}{\color{tab}}{\normalcolor}
+\newcommand{\gtxchordsize}{\footnotesize}
+\setlength{\parindent}{0pt}
+\sloppy
+\setlength{\unitlength}{1mm}
+\newcommand{\gtxchord}[2]{\sbox{\gtxchordbox}{#1}\sbox{\textbox}{#2}%
+\ifthenelse{\lengthtest{\wd\textbox>\wd\gtxchordbox}}%
+{%
+\raisebox{2ex}[2ex][2.5ex]{\makebox[0pt][l]{\scriptsize\bf#1}}#2%
+}{%
+\raisebox{2ex}[2ex][2.5ex]{\makebox[0pt][l]{\scriptsize\bf#1}}\makebox[\wd\gtxchordbox+0.5em][l]{#2}%
+}%
+}%
+\newcommand{\guitartab}{%
+\makebox[0cm][l]{\raisebox{12.5ex}{\footnotesize{e}}}%
+\makebox[0cm][l]{\raisebox{10.5ex}{\footnotesize{H}}}%
+\makebox[0cm][l]{\raisebox{8.5ex}{\footnotesize{G}}}%
+\makebox[0cm][l]{\raisebox{6.5ex}{\footnotesize{D}}}%
+\makebox[0cm][l]{\raisebox{4.5ex}{\footnotesize{A}}}%
+\makebox[0cm][l]{\raisebox{2.5ex}{\footnotesize{E}}}%
+~~
+\makebox[0cm][l]{\raisebox{13ex}{\line(1,0){130}}}%
+\makebox[0cm][l]{\raisebox{11ex}{\line(1,0){130}}}%
+\makebox[0cm][l]{\raisebox{9ex}{\line(1,0){130}}}%
+\makebox[0cm][l]{\raisebox{7ex}{\line(1,0){130}}}%
+\makebox[0cm][l]{\raisebox{5ex}{\line(1,0){130}}}%
+\makebox[0cm][l]{\raisebox{3ex}{\line(1,0){130}}}%
+~}
+
+\newcommand{\basstab}{%
+\makebox[0cm][l]{\raisebox{8.5ex}{\footnotesize{G}}}%
+\makebox[0cm][l]{\raisebox{6.5ex}{\footnotesize{D}}}%
+\makebox[0cm][l]{\raisebox{4.5ex}{\footnotesize{A}}}%
+\makebox[0cm][l]{\raisebox{2.5ex}{\footnotesize{E}}}%
+~~
+\makebox[0cm][l]{\raisebox{9ex}{\line(1,0){130}}}%
+\makebox[0cm][l]{\raisebox{7ex}{\line(1,0){130}}}%
+\makebox[0cm][l]{\raisebox{5ex}{\line(1,0){130}}}%
+\makebox[0cm][l]{\raisebox{3ex}{\line(1,0){130}}}%
+~}
+
+\newcommand{\gtxtabs}[2]{\makebox[0cm][l]{\raisebox{#1}{#2}}}
+\newcommand{\hdraw}{
+  \begin{picture}(0,0)
+    \put(0,2.5){\vector(0,-1){3}}
+  \end{picture}
+}
+
+\newcommand{\hblow}{
+  \begin{picture}(0,0)
+    \put(0,-0.5){\vector(0,1){3}}
+  \end{picture}
+}
+
+\newcommand{\hdrawh}{
+  \begin{picture}(0,0)
+    \put(0,2.5){\line(0,-1){1.5}}
+%    \put(0,1){\line(-1,-1){1.5}}
+%    \put(0,1){\vector(-1,-1){2}}
+    \put(0,1){\vector(-1,-1){1}}
+  \end{picture}
+}
+
+\newcommand{\hdrawhh}{
+  \begin{picture}(0,0)
+    \put(0,2.5){\line(0,-1){1.5}}
+    \put(0,1){\vector(-1,0){1.5}}
+  \end{picture}
+}
+
+\newcommand{\hdrawhhh}{
+  \begin{picture}(0,0)
+    \put(0,2.5){\line(0,-1){2}}
+    \put(0,0.5){\vector(-1,1){1}}
+  \end{picture}
+}
+
+\newcommand{\combichord}[3]{\sbox{\gtxchordbox}{#1}\sbox{\textbox}{#3}\sbox{\harpbox}{#2}%
+\ifthenelse{\lengthtest{\wd\textbox>\wd\gtxchordbox}\and\lengthtest{\wd\textbox>\wd\harpbox}}{%
+\raisebox{2ex}[2ex][2.5ex]{\makebox[0pt][l]{\scriptsize\bf#1}}\raisebox{-2ex}[2ex][2.5ex]{\makebox[0pt][l]{\scriptsize\bf#2}}#3%
+}{%
+\ifthenelse{\lengthtest{\wd\harpbox>\wd\textbox}\and\lengthtest{\wd\harpbox>\wd\gtxchordbox}}{%
+\raisebox{2ex}[2ex][2.5ex]{\makebox[0pt][l]{\scriptsize\bf#1}}\raisebox{-2ex}[2ex][2.5ex]{\makebox[0pt][l]{\scriptsize\bf#2}}\makebox[\wd\harpbox]{#3}%
+}{%
+\raisebox{2ex}[2ex][2.5ex]{\makebox[0pt][l]{\scriptsize\bf#1}}\raisebox{-2ex}[2ex][2.5ex]{\makebox[0pt][l]{\scriptsize\bf#2}}\makebox[\wd\gtxchordbox]{#3}%
+}}}%
+\begin{document}
+\newsavebox{\gtxchordbox}
+\newsavebox{\textbox}
+\newsavebox{\harpbox}
+\ifthenelse{\isodd{\thepage}}{}{\newpage ~}%
+
+%----- New Song -----
+\newpage\addcontentsline{toc}{section}{ House Of The Rising Sun}
+\begin{center} \section*{ House Of The Rising Sun}\end{center}
+\index{ House Of The Rising Sun}\typeout{ House Of The Rising Sun}\index{ Unknown but here is the interpret! House Of The Rising Sun}\begin{center} Unknown but here is the interpret\end{center}
+\textbf{\textit{Key/parallelkey: A-minor/C-major}} \\
+\\
+\textbf{\textit{Rythm: 3/4 pimami}} \\
+\\
+% here a basic latex-comment: define creates chord shapes at the end
+% for open chords one should remember
+% {a: } creates a heading often it helps to put it infront of chorus etc and refer to it to save space
+\textbf{\textit{Intro: Am C D F Am C E E7}} \\
+\\
+\footnotesize
+\guitartab
+\gtxtabs{14.5ex}{Am}\gtxtabs{4.5ex}{\textbf{0}}~~~~~~\gtxtabs{8.5ex}{2}~~~\gtxtabs{10.5ex}{1}~~~\gtxtabs{12.5ex}{0}~~~\gtxtabs{10.5ex}{1}~~~\gtxtabs{8.5ex}{2}~~~\gtxtabs{3.7ex}{|}\gtxtabs{5.7ex}{|}\gtxtabs{7.7ex}{|}\gtxtabs{9.7ex}{|}\gtxtabs{11.3ex}{|}~~~\gtxtabs{14.5ex}{C}\gtxtabs{4.5ex}{\textcolor{red}{3}}~~~~~~\gtxtabs{8.5ex}{0}~~~\gtxtabs{10.5ex}{1}~~~\gtxtabs{12.5ex}{0}~~~\gtxtabs{10.5ex}{1}~~~\gtxtabs{8.5ex}{0}~~~\gtxtabs{3.7ex}{|}\gtxtabs{5.7ex}{|}\gtxtabs{7.7ex}{|}\gtxtabs{9.7ex}{|}\gtxtabs{11.3ex}{|}~~~\gtxtabs{14.5ex}{...}~~~~~~~~~\gtxtabs{3.7ex}{|}\gtxtabs{5.7ex}{|}\gtxtabs{7.7ex}{|}\gtxtabs{9.7ex}{|}\gtxtabs{11.3ex}{|}~~~\gtxtabs{0ex}{E7}\gtxtabs{14.5ex}{$\downarrow$}\gtxtabs{2.5ex}{0}\gtxtabs{4.5ex}{2}\gtxtabs{6.5ex}{0}\gtxtabs{8.5ex}{1}\gtxtabs{10.5ex}{0}\gtxtabs{12.5ex}{0}~~~\gtxtabs{14.5ex}{$\downarrow$}\gtxtabs{2.5ex}{0}\gtxtabs{4.5ex}{2}\gtxtabs{6.5ex}{0}\gtxtabs{8.5ex}{1}\gtxtabs{10.5ex}{0}\gtxtabs{12.5ex}{0}~~~\gtxtabs{14.5ex}{$\downarrow$}\gtxtabs{2.5ex}{0}\gtxtabs{4.5ex}{2}\gtxtabs{6.5ex}{0}\gtxtabs{8.5ex}{1}\gtxtabs{10.5ex}{0}\gtxtabs{12.5ex}{0}~~~\gtxtabs{14.5ex}{$\downarrow$}\gtxtabs{2.5ex}{0}\gtxtabs{4.5ex}{2}\gtxtabs{6.5ex}{0}\gtxtabs{8.5ex}{1}\gtxtabs{10.5ex}{0}\gtxtabs{12.5ex}{0}~~~\gtxtabs{14.5ex}{$\downarrow$}\gtxtabs{2.5ex}{0}\gtxtabs{4.5ex}{2}\gtxtabs{6.5ex}{0}\gtxtabs{8.5ex}{1}\gtxtabs{10.5ex}{0}\gtxtabs{12.5ex}{0}~~~\gtxtabs{14.5ex}{$\downarrow$}\gtxtabs{2.5ex}{0}\gtxtabs{4.5ex}{2}\gtxtabs{6.5ex}{0}\gtxtabs{8.5ex}{1}\gtxtabs{10.5ex}{0}\gtxtabs{12.5ex}{0}~~~\gtxtabs{3.7ex}{|}\gtxtabs{5.7ex}{|}\gtxtabs{7.7ex}{|}\gtxtabs{9.7ex}{|}\gtxtabs{11.3ex}{|}~~~
+\normalsize
+
+% you can control the spacing in guitartab with _
+% the strings are numbered against the convention so 2 = A 3 = D and so on
+% color makes sense for marking meldoy line etc. bld for strong accent and italian for low accent
+% field top above can be accessed with 9 below by -2
+\textbf{\textit{Chorus}} \\
+\\
+\begin{chorus}
+\combichord{}{}{}\combichord{Am}{}{There~is~a~}\combichord{C}{}{house~in~}\combichord{D}{}{New~Orl}\combichord{F}{}{ean}\\ 
+\combichord{}{}{}\combichord{Am}{}{They~call~the~}\combichord{C}{}{Rising~}\combichord{E}{}{Sun~~}\combichord{E7}{}{}\\ 
+\combichord{}{}{And~It's~b}\combichord{Am}{}{een~the~}\combichord{C}{}{ruin~of~}\combichord{D}{}{many~a~poor~}\combichord{F}{}{boy}\\ 
+\combichord{}{}{}\combichord{Am}{}{And~God,~I~}\combichord{E}{}{know,~I'm~}\combichord{Am}{}{one~}\combichord{E}{}{}\\ 
+\end{chorus}
+
+\textbf{\textit{ Vers 1+2}} \\
+\\
+% divide pages by minipage
+\begin{minipage}[t]{0.5\textwidth}
+\begin{bridge}
+\combichord{}{}{}\combichord{Am}{}{My~mother~w}\combichord{C}{}{as~a~}\combichord{D}{}{tailor}\combichord{F}{}{}\\ 
+\combichord{}{}{She~}\combichord{Am}{}{sewed~my~}\combichord{C}{}{new~blue~}\combichord{E}{}{jeans}\combichord{E7}{}{}\\ 
+\combichord{}{}{My~}\combichord{Am}{}{father~}\combichord{C}{}{was~a~}\combichord{D}{}{gambling~}\combichord{F}{}{man}\\ 
+\combichord{}{}{}\combichord{Am}{}{Down~in~}\combichord{E}{}{New~}\combichord{Am}{}{Orleans~}\combichord{E}{}{}\\ 
+\end{bridge}
+
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\begin{bridge}
+\combichord{}{}{}\combichord{Am}{}{And~the~only~}\combichord{C}{}{things~a~}\combichord{D}{}{gambler~}\combichord{F}{}{needs}\\ 
+\combichord{}{}{Is~a~}\combichord{Am}{}{suitcase~}\combichord{C}{}{and~a~}\combichord{E}{}{trunk}\combichord{E7}{}{}\\ 
+\combichord{}{}{And~the~}\combichord{Am}{}{only~}\combichord{C}{}{time~he's~}\combichord{D}{}{satis}\combichord{F}{}{fied}\\ 
+\combichord{}{}{Is~}\combichord{Am}{}{when~he's~}\combichord{E}{}{all~}\combichord{Am}{}{a-drunk}\combichord{E}{}{}\\ 
+\end{bridge}
+
+\end{minipage}
+\textbf{\textit{ Vers 3+4}} \\
+\\
+\begin{minipage}[t]{0.5\textwidth}
+\begin{bridge}
+\combichord{}{}{So~}\combichord{Am}{}{mothers,~}\combichord{C}{}{tell~your~}\combichord{D}{}{children}\combichord{F}{}{}\\ 
+\combichord{}{}{Not~to~}\combichord{Am}{}{do~what~}\combichord{C}{}{I~have~}\combichord{E}{}{done}\combichord{E7}{}{}\\ 
+\combichord{}{}{}\combichord{Am}{}{Spend~your~}\combichord{C}{}{life~in~}\combichord{D}{}{sin~and~}\combichord{F}{}{misery}\\ 
+\combichord{}{}{In~the~}\combichord{Am}{}{house~of~the~}\combichord{E}{}{Rising~}\combichord{Am}{}{Sun~}\combichord{E}{}{}\\ 
+\end{bridge}
+
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+\begin{bridge}
+\combichord{}{}{I've~}\combichord{Am}{}{got~one~}\combichord{C}{}{foot~on~the~}\combichord{D}{}{platform}\combichord{F}{}{}\\ 
+\combichord{}{}{The~}\combichord{Am}{}{other~}\combichord{C}{}{foot~on~the~}\combichord{E}{}{train}\combichord{E7}{}{}\\ 
+\combichord{}{}{I'm~}\combichord{Am}{}{going~}\combichord{C}{}{back~to~}\combichord{D}{}{New~}\combichord{F}{}{Orleans}\\ 
+\combichord{}{}{To~}\combichord{Am}{}{wear~the~}\combichord{E}{}{ball~and~}\combichord{Am}{}{chain~}\combichord{E}{}{}\\ 
+\end{bridge}
+
+\end{minipage}
+\textbf{\textit{ Vers 5}} \\
+\\
+\begin{bridge}
+\combichord{}{}{So~}\combichord{Am}{}{mothers,~}\combichord{C}{}{tell~your~}\combichord{D}{}{children}\combichord{F}{}{}\\ 
+\combichord{}{}{Not~to~}\combichord{Am}{}{do~what~}\combichord{C}{}{I~have~}\combichord{E}{}{done}\combichord{E7}{}{}\\ 
+\combichord{}{}{}\combichord{Am}{}{Spend~your~}\combichord{C}{}{life~in~}\combichord{D}{}{sin~and~}\combichord{F}{}{misery}\\ 
+\combichord{}{}{In~the~}\combichord{Am}{}{house~of~the~}\combichord{E}{}{Rising~}\combichord{Am}{}{Sun~}\combichord{E}{}{}\\ 
+\end{bridge}
+
+\textbf{\textit{Chorus}} \\
+\\
+~\chord{{t}}{x,n,2,2,1,n}{Am}
+~\chord{{5}}{1,3,3,1,1,1}{Am*}
+\end{document}

@@ -15,13 +15,23 @@
  */
 package guitartex2;
 
+import java.io.Reader;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+
+import java.nio.charset.StandardCharsets;
+import java.io.Writer;
+import java.io.BufferedWriter;
+import java.io.OutputStreamWriter;
+import java.io.FileOutputStream;
+
 import java.nio.charset.Charset;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+
 
 public class GTXParser {
 
@@ -179,13 +189,10 @@ public class GTXParser {
     private final String dHarpUsed = ".*<.*>.*";
     private final String dChordUsed = ".*\\[.*\\].*";
 
-    private final GTXTextConsole myConsole;
-
     // --------------------Constructor
     public GTXParser(String editArea) {
         // http://www.bastie.de/index.html?/java/mjregular/index.html
         mEditArea = editArea;
-        myConsole = new GTXTextConsole();
     }// Constructor
 
     public int convertToTeX() {
@@ -379,7 +386,7 @@ public class GTXParser {
                             bridgeStartZeile = 0;
                             mBridgeSection = "";
                         } else {
-                            myConsole.addText("Ende von Bridge ohne den zugehoerigen Anfang!");
+                            System.out.println("Ende von Bridge ohne den zugehoerigen Anfang!");
                         }
                     }
 
@@ -399,7 +406,7 @@ public class GTXParser {
                             chorusStartZeile = 0;
                             mChorusSection = "";
                         } else {
-                            myConsole.addText("Ende von Chorus ohne den zugehoerigen Anfang!");
+                            System.out.println("Ende von Chorus ohne den zugehoerigen Anfang!");
                         }
                     }
 
@@ -424,7 +431,7 @@ public class GTXParser {
                             tabStartZeile = 0;
                             mTabSection = "";
                         } else {
-                            myConsole.addText("Ende vom Tab ohne den zugehoerigen Anfang!");
+                            System.out.println("Ende vom Tab ohne den zugehoerigen Anfang!");
                         }
                     }
 
@@ -449,7 +456,7 @@ public class GTXParser {
                             texStartZeile = 0;
                             mTexSection = "";
                         } else {
-                            myConsole.addText("Ende von Tex ohen den zugehoerigen Anfang!");
+                            System.out.println("Ende von Tex ohen den zugehoerigen Anfang!");
                         }
                     }
 
@@ -481,7 +488,7 @@ public class GTXParser {
                 }
 
             } catch (Exception e) {
-                myConsole.addText("Problem beim Konvertieren" + e);
+                System.out.println("Problem beim Konvertieren" + e);
             }
         }
 
@@ -528,7 +535,7 @@ public class GTXParser {
         //   1 => delete closed Element
         //     => delete spaces
         //     => delete carage return (windows)
-        //   2 => delete closed Element
+        //   2 => delete closed Element (gtxtabs)
         //     => delete TAB
         //     => replace # Element
         //   3 => delete TAB        (chord and bdrige blocks)
@@ -537,26 +544,47 @@ public class GTXParser {
             chString = chString.replaceAll("\\}", "");
             chString = chString.replaceAll(" ", "");
             chString = chString.replaceAll("\r", "");
+
         }
         if (type == 2) {
             chString = chString.replaceAll("\\}", "");
             chString = chString.replaceAll("#", "\\$\\\\sharp\\$");
             chString = chString.replaceAll("\t", "");
+            chString = chString.replaceAll("(\\\\.{2,5}arrow)","\\$$1\\$");
+            chString = chString.replaceAll("(\\\\quad)","\\$$1\\$");//[^\\$]
+            // new allow: \color \textbf \textit with 1-2 numbers
+            chString = chString.replaceAll("(\\\\textbf.{2,3})\\]", "$1\\}\\]");
+            chString = chString.replaceAll("(\\\\textit.{2,3})\\]", "$1\\}\\]");
+            // no rgb selection support yet
+            chString = chString.replaceAll("(\\\\textcolor\\{[^\\{]*)\\{(.{1,2})\\]", "$1\\}\\{$2\\}\\]");
+
+            //
         }
         if (type == 3) {
             chString = chString.replaceAll(" ", "~");
             chString = chString.replaceAll("#", "\\$\\\\sharp\\$");
             chString = chString.replaceAll("\t", "");
+            // arrow replacement done in chordSection
+            // chString = chString.replaceAll("\\downarrow", "$\\downarrow$");
+            // chString = chString.replaceAll("\\uparrow", "$\\uparrow$");
+            // chString = chString.replaceAll("\\Downarrow", "$\\Downarrow$");
+            // chString = chString.replaceAll("\\Uparrow", "$\\Uparrow$");
+            // chString = chString.replaceAll("\\quad", "$\\quad$");
+            // chString = chString.replaceAll("\\downarrow", "\\$\\\\downarrow\\$");
+            // chString = chString.replaceAll("\\uparrow", "\\$\\\\uparrow\\$");
+            // chString = chString.replaceAll("\\Downarrow", "\\$\\\\Downarrow\\$");
+            // chString = chString.replaceAll("\\Uparrow", "\\$\\\\Uparrow\\$");
+            // chString = chString.replaceAll("\\quad", "\\$\\\\quad\\$");
 			//chString = chString.replaceAll("\n", "\\\\\\\\");
             //chString = chString.replaceAll("\n", "\\\\ \n");
             //chString = chString.replaceAll("\n", "\n\\\n");
-            chString = chString.replaceAll("ö", "\"o");
-            chString = chString.replaceAll("Ö", "\"O");
-            chString = chString.replaceAll("ä", "\"a");
-            chString = chString.replaceAll("Ä", "\"A");
-            chString = chString.replaceAll("ü", "\"u");
-            chString = chString.replaceAll("Ü", "\"U");
-            chString = chString.replaceAll("ß", "\"s");
+            // chString = chString.replaceAll("ö", "\"o");
+            // chString = chString.replaceAll("Ö", "\"O");
+            // chString = chString.replaceAll("ä", "\"a");
+            // chString = chString.replaceAll("Ä", "\"A");
+            // chString = chString.replaceAll("ü", "\"u");
+            // chString = chString.replaceAll("Ü", "\"U");
+            // chString = chString.replaceAll("ß", "\"s");
         }
 
         return chString;
@@ -739,6 +767,10 @@ public class GTXParser {
      } */
     private String parseChordSection(String chordSection, boolean skipEmptyLines) {
         String convertedText = "";
+        // new arrow matcher replacement
+        chordSection = chordSection.replaceAll("(\\\\.{2,5}arrow)","\\\\\\$\\\\$1\\\\\\$");
+        chordSection = chordSection.replaceAll("(\\\\quad)","\\\\\\$\\\\$1\\\\\\$"); 
+
         chordSection = chordSection.replaceAll("\r", "");
         String[] chordSectionLinewise = chordSection.split("\n");
 
@@ -746,7 +778,11 @@ public class GTXParser {
         for (String chordSectionLinewise1 : chordSectionLinewise) {
             String line = parseChordSectionSingle(chordSectionLinewise1, skipEmptyLines);
             if ("".equals(line)) {
+                //unchanged
                 line = toTeXString(chordSectionLinewise1, 3);
+                // just add dollars remove
+                line = line.replaceAll("\\\\\\$\\\\(\\\\.{2,5}arrow)\\\\\\$","\\$$1\\$");
+                line = line.replaceAll("\\\\\\$\\\\(\\\\quad)\\\\\\$","\\$$1\\$");
                 convertedText = convertedText + "\\combichord{}{}{" + line + "}\\\\ \n";
             } else {
                 //System.out.println("> " + line);
@@ -765,13 +801,14 @@ public class GTXParser {
         String myTextHarp = "";
         boolean unchanged = true;
 
+        
+
+        Pattern parsePattern = Pattern.compile("([\\[<].*?[\\]>])([\\[<].*?[\\]>])?([.[^\\n\\[<\\]>]]*)");
+
         String convertedText = chordSection;
 
-        Pattern parsePattern = Pattern.compile("([\\[<].*?[\\]>])([\\[<].*?[\\]>])?([.[^\\n\\[<\\]>\\\\]]*)");
-
         Matcher mat = parsePattern.matcher(convertedText);
-
-        //System.out.print("ChordSection:"+chordSection);
+        System.out.print("ChordSection:"+chordSection);
         while (mat.find()) {
             // Anfang soll auch in ein combichord gepackt werden
             if ("".equals(myTextChord) && "".equals(myTextSong) && "".equals(myTextHarp)) {
@@ -784,10 +821,15 @@ public class GTXParser {
             unchanged = false;
             myTextChord = "";
             myTextHarp = "";
+            // if (mat.group(4) != null){
+            //     //add escape symbols for string and latex
 
+            // } else {
             myTextSong = mat.group(3);
+            // }
+            
 
-			//System.out.println("(1): " + mat.group(1) + " (2): " + mat.group(2) + " (3): " + mat.group(3) );
+			System.out.println("(1): " + mat.group(1) + " (2): " + mat.group(2) + " (3): " + mat.group(3) ); //+" (4): " + mat.group(4)
             if (mat.group(1) != null && mat.group(1).charAt(0) == '[') {
                 //its an guitar chord
                 myTextChord = mat.group(1).substring(1, mat.group(1).length() - 1);
@@ -805,14 +847,14 @@ public class GTXParser {
             myTextHarp = harpToTex(myTextHarp);
 
             convertedText = mat.replaceFirst("\\\\combichord{" + myTextChord + "}{" + myTextHarp + "}{" + myTextSong + "}");
+            System.out.println("converted: "+convertedText); 
             mat.reset(convertedText);
 
         }
         if (unchanged) {
             return "";
         } else {
-			//System.out.println(startText + convertedText.substring(startIndex, convertedText.length()));
-            //return "";
+			// Changed
             return toTeXString(startText + convertedText.substring(startIndex, convertedText.length()), 3);
         }
     }
@@ -863,7 +905,7 @@ public class GTXParser {
                 mTab = mTab + "\\footnotesize \\verb!" + myTeXTabLine1 + "! \\normalsize \\newline \n";
             }
         } catch (Exception e) {
-            myConsole.addText("ERR: " + e);
+            System.out.println("ERR: " + e);
         }
         mTab = mTab + "\\end{gtxtab}" + "\n";
         mSong = mSong + mTab + "\n";
@@ -875,7 +917,7 @@ public class GTXParser {
             // zum Song hinzufuegen
             mSong = mSong + "\n" + myTex;
         } catch (Exception e) {
-            myConsole.addText("ERR: " + e);
+            System.out.println("ERR: " + e);
         }
 
         return 0;
@@ -890,6 +932,7 @@ public class GTXParser {
     private int setGuitarTab(String guitarTab) {
         String texGuitarTab = "";
 
+        String string0Pos = "0ex";
         String string1Pos = "2.5ex";
         String string2Pos = "4.5ex";
         String string3Pos = "6.5ex";
@@ -908,6 +951,7 @@ public class GTXParser {
         guitarTab = guitarTab.replaceAll(dGuitarTab, "");
         guitarTab = toTeXString(guitarTab, 2);
 
+        guitarTab = guitarTab.replaceAll("\\[-2;", "\\[" + string0Pos + ";");
         guitarTab = guitarTab.replaceAll("\\[1;", "\\[" + string1Pos + ";");
         guitarTab = guitarTab.replaceAll("\\[2;", "\\[" + string2Pos + ";");
         guitarTab = guitarTab.replaceAll("\\[3;", "\\[" + string3Pos + ";");
@@ -1016,26 +1060,28 @@ public class GTXParser {
 
         File f = new File(fileName);
         try {
-            try (FileInputStream fis = new FileInputStream(f); BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(f), Charset.forName("UTF-8")))) {
-                boolean eof = false;
-                while (eof == false) {
-                    String line = in.readLine();
-                    if (line == null) {
-                        eof = true;
-                    } else {
-                        mTextArea = mTextArea + line + "\n";
-                    }
-                }
+            Reader reader = new InputStreamReader(new FileInputStream(f), "UTF-8"); //
+            BufferedReader in = new BufferedReader(reader); 
+            // Writer writer = new OutputStreamWriter(new FileOutputStream(mTextArea), "UTF-8");
+            // BufferedWriter out = new BufferedWriter(writer); 
+            String line;
+            while ((line=in.readLine())!=null) {
+                mTextArea = mTextArea + line + "\n";
+                // out.write(line);
+                // out.newLine();
             }
-
+            in.close();
+            // out.close();
+            System.out.println("textArea: "  + mTextArea);
             GTXParser mGTXParser = new GTXParser(mTextArea);
             mGTXParser.convertToTeX();
             if (mGTXParser.getEven() == true) {
                 mMultipleSongs = mMultipleSongs + "\\ifthenelse{\\isodd{\\thepage}}{}{\\newpage ~}\n";
             }
             mMultipleSongs = mMultipleSongs + mGTXParser.getMyTeXSong();
+
         } catch (Exception e) {
-            myConsole.addText("File input error:" + e);
+            System.out.println("File input error:" + e);
         }
 
     }
