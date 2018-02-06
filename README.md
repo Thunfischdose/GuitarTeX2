@@ -17,6 +17,7 @@ The main differences to the repo from which this is forked are:
 * Clone the repo and open it with vscode
 
 ## Usage:
+* create a gtx folder or rename the example-gtx folder
 * Create a .gtx file in the gtx/ folder for songs and .gtb files with include premitive for songbooks
 * Ctrl+B -> Parse GTX: Handles the file over to the main.class which wraps the original parser (see /.vscode/tasks.json)
 * Ctrl+Shift+P -> run Tasks -> openTeX: Opens the parsed texfile which is stored in the tex/ folder
