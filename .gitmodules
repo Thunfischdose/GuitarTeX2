@@ -1,0 +1,3 @@
+[submodule "gtx"]
+	path = gtx
+	url = https://git.thomasrosen.de/Thunfischdose/gtx.git
